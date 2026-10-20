@@ -5,6 +5,32 @@ public class BankAccount {
     private String accountHolder;
     private double balance;
 
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getAccountHolder() {
+        return accountHolder;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if(amount > 0) {
+            balance += amount;
+        }
+    }
+
+    
+
+    BankAccount( int an, String ah, double b) {
+        accountNumber = an;
+        accountHolder = ah;
+        balance = b;
+    }
+
     BankAccount() {
 
         accountNumber = 0;
