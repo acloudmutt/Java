@@ -42,10 +42,14 @@ public class BankAccountApp {
             switch (choice) {
                 case 1:
                     System.out.println("Create Checking Account");
+                    CheckingAccount ca = new CheckingAccount(1234, "Smith, John", 0);        
+                    System.out.printf("%-6d %-20s %6.1f %6.1f %n", ca.getAccountNumber(), ca.getAccountHolder(), ca.getBalance(), ca.getoverdraftFee());
                     break;
 
                 case 2:
                     System.out.println("Create Savings Account");
+                    SavingsAccount sa = new SavingsAccount(5678, "Doe, Jane", 0);        
+                    System.out.printf("%-6d %-20s %6.1f %6.1f %n", sa.getAccountNumber(), sa.getAccountHolder(), sa.getBalance(), sa.getInterestRate());
                     break;
 
                 case 3:

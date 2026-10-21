@@ -31,6 +31,10 @@ public class BankAccount {
         }
     }
 
+    public void displayAccount() {
+
+        System.out.printf("%-6d %-20s %6.1f %n", accountNumber, accountHolder, balance);
+    }
     
 
     BankAccount( int an, String ah, double b) {
