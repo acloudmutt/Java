@@ -23,6 +23,14 @@ public class BankAccount {
         }
     }
 
+    public void withdraw(double amount) {
+        if(amount > 0) {
+            if(balance > amount) {
+                balance -= amount;
+            }
+        }
+    }
+
     
 
     BankAccount( int an, String ah, double b) {
