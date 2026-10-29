@@ -8,6 +8,16 @@ public class CheckingAccount extends BankAccount{
         return overdraftFee;
     }
 
+    public void withdraw(double amount) {
+        if(amount >= getBalance()) {
+            dowithdrawl(amount);
+        }else{
+            if(getBalance() >= overdraftFee) {
+                dowithdrawl(amount);
+            }
+        }
+    }
+
     CheckingAccount() {
         System.out.println("CheckingAccount");
     }

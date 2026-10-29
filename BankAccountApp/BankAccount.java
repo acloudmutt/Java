@@ -31,6 +31,14 @@ public class BankAccount {
         }
     }
 
+    protected void dowithdrawl(double amount) {
+        if(amount > 0) {
+            if(balance > amount) {
+                balance -= amount;
+            }
+        }
+    }
+
     public void displayAccount() {
 
         System.out.printf("%-6d %-20s %6.1f %n", accountNumber, accountHolder, balance);

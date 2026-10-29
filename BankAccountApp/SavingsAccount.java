@@ -5,6 +5,7 @@ public class SavingsAccount extends BankAccount {
     private double interestRate;
 
     public void applyInterest() {
+        deposit(getBalance() + getBalance() * interestRate);
 
     }
 
