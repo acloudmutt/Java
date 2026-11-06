@@ -5,12 +5,17 @@ public class SavingsAccount extends BankAccount {
     private double interestRate;
 
     public void applyInterest() {
-        deposit(getBalance() + getBalance() * interestRate);
-
+        deposit(getBalance() * interestRate);
     }
 
     public double getInterestRate() {
         return interestRate;
+    }
+
+    //@Override
+    public void displayAccount() {
+
+        System.out.printf("%-9s %-6d %-20s %6.2f %6.2f %n", "Savings,", getAccountNumber(), getAccountHolder(), getBalance(), interestRate);
     }
 
     SavingsAccount() {

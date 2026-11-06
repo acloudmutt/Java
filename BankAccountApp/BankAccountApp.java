@@ -25,8 +25,7 @@ public class BankAccountApp {
 
     public static int selectAccount() {
         int choice = -1;
-        boolean done = false;
-        //Scanner scanner = new Scanner(System.in);
+        boolean done = false;        
 
         do{
             if(accounts.isEmpty()) {
@@ -37,7 +36,7 @@ public class BankAccountApp {
             System.out.println("Select account: ");
             for(int i = 0; i < accounts.size(); i++) {
                 BankAccount ba = accounts.get(i);
-                System.out.printf("%-2d %-6d %-20s %6.1f %n", i+1, ba.getAccountNumber(), ba.getAccountHolder(), ba.getBalance());
+                System.out.printf("%-2d %-6d %-20s %6.2f %n", i+1, ba.getAccountNumber(), ba.getAccountHolder(), ba.getBalance());
             }
             
             if(scanner.hasNext()) {
@@ -46,7 +45,8 @@ public class BankAccountApp {
                     done = true;
                 }
             }else {
-                System.out.println("Invalid input. Enter a number.");                
+                System.out.println("Invalid input. Enter a number.");
+                scanner.next();     // Consume invalid token                
                 continue;
             }
         }while (!done);       
@@ -72,24 +72,22 @@ public class BankAccountApp {
     {
         int number = getNewAccountNumber();        
         CheckingAccount ca = new CheckingAccount(number, "Smith, John", 0);        
-        System.out.printf("%-6d %-20s %6.1f %6.1f %n", ca.getAccountNumber(), ca.getAccountHolder(), ca.getBalance(), ca.getoverdraftFee());
+        System.out.printf("%-6d %-20s %6.2f %6.2f %n", ca.getAccountNumber(), ca.getAccountHolder(), ca.getBalance(), ca.getoverdraftFee());
         accounts.add(ca);
 
         number = getNewAccountNumber();        
         ca = new CheckingAccount(number, "Stewart, Rod", 100.25);        
-        System.out.printf("%-6d %-20s %6.1f %6.1f %n", ca.getAccountNumber(), ca.getAccountHolder(), ca.getBalance(), ca.getoverdraftFee());
+        System.out.printf("%-6d %-20s %6.2f %6.2f %n", ca.getAccountNumber(), ca.getAccountHolder(), ca.getBalance(), ca.getoverdraftFee());
         accounts.add(ca);
 
         number = getNewAccountNumber();  
         SavingsAccount sa = new SavingsAccount(number, "Langevin, Murphy", 500.25);        
-        System.out.printf("%-6d %-20s %6.1f %6.1f %n", number, sa.getAccountHolder(), sa.getBalance(), sa.getInterestRate());
+        System.out.printf("%-6d %-20s %6.2f %6.2f %n", number, sa.getAccountHolder(), sa.getBalance(), sa.getInterestRate());
         accounts.add(sa);
     }
     
     public static void main(String[] args) {
-        //System.out.println("BankAccountApp");
-
-        //Scanner scanner = new Scanner(System.in);
+        
         int choice, number, choice1;
 
         initializeAccounts();
@@ -104,6 +102,7 @@ public class BankAccountApp {
             } else {
                 System.out.println("Invalid input. Enter a number.");                
                 choice = -1;
+                scanner.next();     // Consume invalid token 
                 continue;
             }
 
@@ -148,13 +147,30 @@ public class BankAccountApp {
                 case 4:
                     System.out.println("Withdraw Money");
                     choice1 = selectAccount();
-                    System.out.printf("%-6d\n", choice1);
+                    //System.out.printf("%-6d\n", choice1);
+                    if(choice1 >= 0) {                        
+                        System.out.printf("Enter amount:  ");
+                        
+                        double dvalue = scanner.nextDouble();                        
+                        //System.out.printf("amount:  %-6.2f\n", dvalue);
+                        
+                        if (dvalue > 0) {
+                            try {                            
+                                accounts.get(choice1).withdraw(dvalue);
+                            } catch (InsufficientFundsException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        System.out.printf("%-6d %-20s %-6.2f \n", accounts.get(choice1).getAccountNumber(), accounts.get(choice1).getAccountHolder(), accounts.get(choice1).getBalance());
+                    }
                     break;
 
                 case 5:
                     System.out.println("Display Account Information");
                     choice1 = selectAccount();
-                    System.out.printf("%-6d\n", choice1);
+                    if(choice1 >= 0) { 
+                        accounts.get(choice1).displayAccount();
+                    }
                     break;
 
                 case 6:
@@ -162,14 +178,23 @@ public class BankAccountApp {
 
                     for(int i = 0; i < accounts.size(); i++) {
                         BankAccount ba = accounts.get(i);
-                        System.out.printf("%-6d %-20s %6.2f %n", ba.getAccountNumber(), ba.getAccountHolder(), ba.getBalance());
+                        //System.out.printf("%-6d %-20s %6.2f %n", ba.getAccountNumber(), ba.getAccountHolder(), ba.getBalance());
+                        ba.displayAccount();
                     }
                     break;
 
                 case 7:
                     System.out.println("Apply Savings Interest1");
                     choice1 = selectAccount();
-                    System.out.printf("%-6d\n", choice1);
+                    if(choice1 >= 0) { 
+                        BankAccount ba = accounts.get(choice1);
+                        if(ba instanceof SavingsAccount) {
+                            SavingsAccount savings = (SavingsAccount) ba;
+                            savings.applyInterest();
+                        } else {
+                            System.out.println("Interest applies only to savings accounts.");
+                        }
+                    }
                     break;
 
                 case 0:
@@ -182,10 +207,6 @@ public class BankAccountApp {
 
         } while (choice != 0);
 
-        scanner.close();
-
-        //BankAccount ba = new BankAccount(1234, "Smith, John", 0);
-        //BankAccount ba = new BankAccount();
-        //System.out.printf("%-6d %-20s %6.1f %n", ba.getAccountNumber(), ba.getAccountHolder(), ba.getBalance());
+        scanner.close();        
     }
 }

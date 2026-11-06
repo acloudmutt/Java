@@ -23,25 +23,24 @@ public class BankAccount {
         }
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) 
+        throws InsufficientFundsException {
         if(amount > 0) {
-            if(balance > amount) {
-                balance -= amount;
-            }
+            if (amount > balance) {
+            throw new InsufficientFundsException(
+                "Insufficient funds: Balance = " + balance);
         }
-    }
+        balance -= amount;
+        }
+    } 
 
-    protected void dowithdrawl(double amount) {
-        if(amount > 0) {
-            if(balance > amount) {
-                balance -= amount;
-            }
-        }
+    public void applyInterest() {
+        
     }
 
     public void displayAccount() {
 
-        System.out.printf("%-6d %-20s %6.1f %n", accountNumber, accountHolder, balance);
+        //System.out.printf("%-6d %-20s %6.2f %n", accountNumber, accountHolder, balance);
     }
     
 
