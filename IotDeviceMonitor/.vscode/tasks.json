@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start JavaFX Debug Server",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "-Pdebug",
+                "javafx:run"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "MAVEN_OPTS": "-Djava.net.preferIPv4Stack=true"
+                }
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "javafx",
+                "pattern": {
+                    "regexp": "^(.*)$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\[INFO\\] Scanning for projects.*",
+                    "endsPattern": ".*Listening for transport dt_socket at address: 5005.*"
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        }
+    ]
+}

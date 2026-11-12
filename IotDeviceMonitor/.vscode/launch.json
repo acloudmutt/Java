@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "com.iotmonitor.MainApp",
+            "projectName": "iot-device-monitor"
+        },
+        {
+            "type": "java",
+            "name": "Debug IoT Device Monitor (F5)",
+            "request": "attach",
+            "hostName": "127.0.0.1",
+            "port": 5005,
+            "preLaunchTask": "Start JavaFX Debug Server"
+        }
+    ]
+}
+
